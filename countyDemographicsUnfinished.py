@@ -56,71 +56,63 @@ def lowest_median_income(counties):
     return county_name
     
     
+    
 def high_income_counties(counties):
     """Return a LIST of the counties with a median household income over $90,000."""
-    incomeList = []
+    highIncomeList = []
     for income in counties:
         income["Income"]["Median Houseold Income"]
         if income["Income"]["Median Houseold Income"] > 90000:
-            incomeList.append(income["County"])
-    return incomeList
+            highIncomeList.append(income["County"])
+    return highIncomeList
 
 
 #To earn higher than a 3, complete one or both of the functions below
 def state_with_most_counties(counties):
     """Return a state that has the most counties."""
     #1. Make a dictionary that has a key for each state and the values keep track of the number of counties in each state
-    
-    #2. Find the state in the dictionary with the most counties
-    
-    #3. Return the state with the most counties
-    us_state_abbrev = {
+    states = {
         "AL": 0, 'AK': 0, 'AZ': 0, 'AR': 0,
-        'CA': 0, 'CO': 0, 'CT': 0,
-        'DE': 0,
-        'FL': 0,
-        'GA': 0,
-        'HI': 0,
-        'ID': 0, 'IL': 0, 'IN': 0, 'IA': 0,
-        'KS': 0, 'KY': 0,
-        'LA': 0,
-        'ME': 0, 'MD': 0, 'MA': 0, 'MI': 0, 'MN': 0, 'MS': 0, 'MO': 0, 'MT': 0,
-        'NE': 0, 'NV': 0, 'NH': 0, 'NJ': 0, 'NM': 0, 'NY': 0, 'NC': 0, 'ND': 0,
-        'OH': 0, 'OK': 0, 'OR': 0,
-        'PA': 0,
-        'RI': 0,
-        'SC': 0, 'SD': 0,
-        'TN': 0, 'TX': 0,
-        'UT': 0,
-        'VT': 0, 'VA': 0,
-        'WA': 0, 'WV': 0, 'WI': 0, 'WY': 0
+        'CA': 0, 'CO': 0, 'CT': 0, 'DE': 0,
+        'FL': 0, 'GA': 0, 'HI': 0, 'ID': 0, 
+        'IL': 0, 'IN': 0, 'IA': 0, 'KS': 0, 
+        'KY': 0, 'LA': 0, 'ME': 0, 'MD': 0, 
+        'MA': 0, 'MI': 0, 'MN': 0, 'MS': 0, 
+        'MO': 0, 'MT': 0, 'NE': 0, 'NV': 0, 
+        'NH': 0, 'NJ': 0, 'NM': 0, 'NY': 0, 
+        'NC': 0, 'ND': 0, 'OH': 0, 'OK': 0, 
+        'OR': 0, 'PA': 0, 'RI': 0, 'SC': 0, 
+        'SD': 0, 'TN': 0, 'TX': 0, 'UT': 0,
+        'VT': 0, 'VA': 0, 'WA': 0, 'WV': 0, 
+        'WI': 0, 'WY': 0
     }
-    for key in us_state_abbrev:
-        for state in counties:
-            if key == state["State"]:
-                us_state_abbrev[key] = us_state_abbrev[key]+1
-    
-    most_counties = "test"
-    amount = 0
-    for x in us_state_abbrev:
-        if amount < us_state_abbrev[x]:
-            amount = us_state_abbrev[x]
-            most_counties = x
+    for county in counties:
+        state=county["State"]
+        if state in states:
+        	states[state]+=1
+        else:
+        	states[state] = 1
+    #2. Find the state in the dictionary with the most counties
+	
+    #3. Return the state with the most counties
+    mostCounties = "CA"
+    for county in states:
+        if states[county] > states[mostCounties]:
+        	mostCounties = county
 
-    return most_counties
+    return(mostCounties)
+    
+    
     
 def your_interesting_demographic_function(counties):
     """Compute and return an interesting fact using the demographic data about the counties in the US."""
-    averageGrad = 0
-    numCounties = 0
-    for num in counties:
-        numCounties = numCounties+1
-    print(numCounties)
-    numGrads = 0;
-    for grads in counties:
-       numGrads = numGrads + grads["Education"]["High School or Higher"]
-    averageGrad = numGrads/numCounties
-    return averageGrad
-
+    #county with the highest ethnicity being hispanic or latino and county name
+    hislat = counties [0]
+    for county in counties:
+    	if county["Ethnicities"]["Hispanic or Latino"] > hislat["Ethnicities"]["Hispanic or Latino"]:
+    		hislat = county
+    return[hislat["County"],hislat["Ethnicities"]["Hispanic or Latino"]]
+    	
+    
 if __name__ == '__main__':
     main()
